@@ -1,0 +1,115 @@
+Ejemplo Normalizacion
+
+Factura = @#factura + #cliente + nombre cliente + fecha + {#artículo + nombre artículo + cantidad artículo +
+precio unitario + precio por cantidad} + precio total
+
+1FN
+
+Factura_Cabecera = @#factura + #cliente + nombre cliente + fecha + precio total.
+
+Factura_Detalle = @#factura + @#artículo +  nombre articulo + precio unitario + cantidad artículo + precio por cantidad.
+
+
+2FN
+
+Factura_Cabecera = @#factura + #cliente + nombre cliente + fecha + precio total.
+
+Factura_Detalle = @#factura + @#artículo + cantidad artículo + precio por cantidad.
+
+Articulo = @#artículo + nombre artículo + precio unitario.
+
+
+3FN
+
+Factura_Cabecera = @#factura + #cliente + fecha + precio total
+
+Cliente = @#cliente + nombre cliente.
+
+Factura_Detalle = @#factura + @#artículo + cantidad artículo + precio por cantidad
+
+Articulo = @#artículo + nombre artículo + precio unitario.
+
+
+Nota: precio total y precio por cantidad se deben eliminar ya que se pueden calcular con otros atributos. Precio por cantidad multiplicando la cantidad de artículos por el precio unitario, y el precio total con la suma de todos losprecios por cantidad.
+
+3FN MODIFICADA
+
+Factura_Cabecera = @#factura + #cliente + fecha
+
+Cliente = @#cliente + nombre cliente.
+
+Factura_Detalle = @#factura + @#artículo + cantidad artículo.
+
+Articulo = @#artículo + nombre artículo + precio unitario.
+
+
+
+columnas agregadas 
+			--> precio total = sum(precio unitario * cantidad articulo)
+			--> precio por cantidad = precio unitario * cantidad articulo
+
+
+-----------------------------------------------------------------
+
+Clinica_Medica = #Clinica + Nombre_Clinica + Dirección_Clinica + Teléfono_Clinica+ #Matricula_Medico + Apellido_Nombre_Medico + Fecha_Ingreso_a_la_Clinica + #Codigo_Especialidad + Nombre_Especialidad
+
+Clinica_Medica = #Clinica + Nombre_Clinica + Dirección_Clinica + Teléfono_Clinica+ {#Matricula_Medico + Apellido_Nombre_Medico + Fecha_Ingreso_a_la_Clinica + #Codigo_Especialidad + Nombre_Especialidad}
+
+Nota: Especialidad, es la del médico.
+
+
+
+1FN
+
+Clinica_Medica = @#Clinica + Nombre_Clinica + Dirección_Clinica + Teléfono_Clinica
+
+Medico = @#Clinica + @#Matricula_Medico + Apellido_Nombre_Medico + Fecha_Ingreso_a_la_Clinica + #Codigo_Especialidad + Nombre_Especialidad
+
+
+2FN
+
+Clinica_Medica = @#Clinica + Nombre_Clinica + Dirección_Clinica + Teléfono_Clinica
+
+Medico_Clinica = @#Clinica + @#Matricula_Medico + Fecha_Ingreso_a_la_Clinica 
+
+Medico = @#Matricula_Medico + Apellido_Nombre_Medico + #Codigo_Especialidad + Nombre_Especialidad
+
+
+3FN
+
+Clinica_Medica = @#Clinica + Nombre_Clinica + Dirección_Clinica + Teléfono_Clinica
+
+Medico_Clinica = @#Clinica + @#Matricula_Medico + Fecha_Ingreso_a_la_Clinica 
+
+Medico = @#Matricula_Medico + Apellido_Nombre_Medico + #Codigo_Especialidad
+
+Especialidad = @#Codigo_Especialidad + Nombre_Especialidad
+
+-----------------------------------------------------------------
+
+Pasajero = @#Nro_Pasajero + Apellido + Nombre + #Cod_Pais_Nacimiento + Pais_Nacimiento + Telefono + Fecha_Nacimiento.
+
+No hay grupos repetitivos
+
+1FN
+
+Pasajero = @#Nro_Pasajero + Apellido + Nombre + #Cod_Pais_Nacimiento + Pais_Nacimiento + Telefono + Fecha_Nacimiento.
+
+
+esta tb en 2fn xq la pk es simple (ws)
+
+2FN
+
+Pasajero = @#Nro_Pasajero + Apellido + Nombre + #Cod_Pais_Nacimiento + Pais_Nacimiento + Telefono + Fecha_Nacimiento.
+
+
+3FN
+
+Pasajero = @#Nro_Pasajero + Apellido + Nombre + #Cod_Pais_Nacimiento + Telefono + Fecha_Nacimiento.
+
+Pais Nacimiento = @#Cod_Pais_Nacimiento + Pais_Nacimiento
+
+
+
+
+
